@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>患者个人信息表</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .user-list {
+            margin-top: 20px;
+        }
+        .user-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        /* 模态框样式 */
+        .modal {
+            display: none; /* 默认隐藏 */
+            position: fixed; /* 固定位置 */
+            z-index: 1; /* 确保在最上层 */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0); /* 背景色 */
+            background-color: rgba(0,0,0,0.4); /* 带透明度的背景色 */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 垂直居中 */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>患者个人信息表</h1>
+    <div>
+        <input type="text" id="searchUser" placeholder="搜索患者...">
+        <button onclick="searchUser()">搜索</button>
+        <button onclick="addNewUser()">添加患者</button>
+    </div>
+    <div class="user-list">
+        {% for user in userList %}
+        <div class="user-item">
+            <p><strong>ID:</strong> {{ user.id }}</p>
+      <p><strong>姓名:</strong> {{ user.name }}</p>
+        <p><strong>身份证号码:</strong> {{ user.identity_card }}</p>
+        <p><strong>住院号:</strong> {{ user.admission_no }}</p>
+        <p><strong>性别:</strong> {{ user.gender }}</p>
+        <p><strong>年龄:</strong> {{ user.age }}</p>
+        <p><strong>生育史:</strong> {{ user.fertility_history }}</p>
+        <p><strong>教育程度:</strong> {{ user.education_level }}</p>
+        <p><strong>职业:</strong> {{ user.occupation }}</p>
+        <p><strong>诊断:</strong> {{ user.diagnosis }}</p>
+        <p><strong>合并疾病:</strong> {{ user.comorbidity }}</p>
+        <p><strong>治疗方式:</strong> {{ user.therapeutic_modality }}</p>
+        <p><strong>医疗费用承担方式:</strong> {{ user.methods_of_medical_cost_coverage }}</p>
+        <p><strong>婚姻状况:</strong> {{ user.marital_status }}</p>
+        <p><strong>电话:</strong> {{ user.phone }}</p>
+        <p><strong>紧急联系人:</strong> {{ user.emergency_contact }}</p>
+        <p><strong>紧急联系人电话:</strong> {{ user.emergency_contact_phone }}</p>
+        <p><strong>家庭住址:</strong> {{ user.address }}</p>
+        <p><strong>农业户口:</strong> {{ user.agricultural_indicator }}</p>
+        <p><strong>创建时间:</strong> {{ user.create_time }}</p>
+        <p><strong>更新时间:</strong> {{ user.update_time }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- 模态框 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>新增用户</h2>
+            <form id="userForm">
+                <label for="name">姓名:</label>
+                <input type="text" id="name" name="name" required>
+                <br>
+                <label for="identity_card">身份证号:</label>
+                <input type="text" id="identity_card" name="identity_card" required>
+                <br>
+                <label for="admission_no">住院号:</label>
+                <input type="text" id="admission_no" name="admission_no" required>
+                <br>
+                <label for="gender">性别:</label>
+                <select id="gender" name="gender" required>
+                    <option value="Male">男</option>
+                    <option value="Female">女</option>
+                </select>
+                <br>
+                <label for="age">年龄:</label>
+                <input type="number" id="age" name="age" required>
+                <br>
+                <label for="fertility_history">生育史:</label>
+                <input type="text" id="fertility_history" name="fertility_history" required>
+                <br>
+                <label for="education_level">教育水平:</label>
+                <select id="education_level" name="education_level" required>
+                    <option value="Primary">小学</option>
+                    <option value="Secondary">中学</option>
+                    <option value="Higher">大学及以上</option>
+                </select>
+                <br>
+                <label for="occupation">职业:</label>
+                <input type="text" id="occupation" name="occupation" required>
+                <br>
+                <label for="diagnosis">诊断:</label>
+                <input type="text" id="diagnosis" name="diagnosis" required>
+                <br>
+                <label for="comorbidity">合并症:</label>
+                <input type="text" id="comorbidity" name="comorbidity" required>
+                <br>
+                <label for="therapeutic_modality">治疗方式:</label>
+                <input type="text" id="therapeutic_modality" name="therapeutic_modality" required>
+                <br>
+                <label for="methods_of_medical_cost_coverage">医疗费用承担方式:</label>
+                <input type="text" id="methods_of_medical_cost_coverage" name="methods_of_medical_cost_coverage" required>
+                <br>
+                <label for="marital_status">婚姻状况:</label>
+                <select id="marital_status" name="marital_status" required>
+                    <option value="Single">单身</option>
+                    <option value="Married">已婚</option>
+                    <option value="Divorced">离异</option>
+                </select>
+                <br>
+                <label for="phone">电话:</label>
+                <input type="text" id="phone" name="phone" required>
+                <br>
+                <label for="emergency_contact">紧急联系人:</label>
+                <input type="text" id="emergency_contact" name="emergency_contact" required>
+                <br>
+                <label for="emergency_contact_phone">紧急联系人电话:</label>
+                <input type="text" id="emergency_contact_phone" name="emergency_contact_phone" required>
+                <br>
+                <label for="address">地址:</label>
+                <input type="text" id="address" name="address" required>
+                <br>
+                <label for="agricultural_indicator">农村户口:</label>
+                <select id="agricultural_indicator" name="agricultural_indicator" required>
+                    <option value="True">是</option>
+                    <option value="False">否</option>
+                </select>
+                <br>
+                <button type="button" onclick="submitForm()">提交</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function searchUser() {
+            var searchTerm = document.getElementById('searchUser').value;
+            fetch(`/api/test/users?search=${searchTerm}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                var userList = document.querySelector('.user-list');
+                userList.innerHTML = '';
+                data.users.forEach(user => {
+                    var userItem = `
+                        <div class="user-item">
+                            <p><strong>ID:</strong> ${user.id}</p>
+                            <p><strong>姓名:</strong> ${user.name}</p>
+                            <p><strong>身份证号码:</strong> ${user.identity_card}</p>
+                            <p><strong>住院号:</strong> ${user.admission_no}</p>
+                            <p><strong>性别:</strong> ${user.gender}</p>
+                            <p><strong>年龄:</strong> ${user.age}</p>
+                            <p><strong>生育史:</strong> ${user.fertility_history}</p>
+                            <p><strong>教育程度:</strong> ${user.education_level}</p>
+                            <p><strong>职业:</strong> ${user.occupation}</p>
+                            <p><strong>诊断:</strong> ${user.diagnosis}</p>
+                            <p><strong>合并疾病:</strong> ${user.comorbidity}</p>
+                            <p><strong>治疗方式:</strong> ${user.therapeutic_modality}</p>
+                            <p><strong>医疗费用承担方式:</strong> ${user.methods_of_medical_cost_coverage}</p>
+                            <p><strong>婚姻状况:</strong> ${user.marital_status}</p>
+                            <p><strong>电话:</strong> ${user.phone}</p>
+                            <p><strong>紧急联系人:</strong> ${user.emergency_contact}</p>
+                            <p><strong>紧急联系人电话:</strong> ${user.emergency_contact_phone}</p>
+                            <p><strong>家庭地址:</strong> ${user.address}</p>
+                            <p><strong>农业户口:</strong> ${user.agricultural_indicator}</p>
+                            <p><strong>创建时间:</strong> ${user.create_time}</p>
+                            <p><strong>更新时间:</strong> ${user.update_time}</p>
+                            <p><a href="/api/test/users/${user.id}">用户详情</a></p>
+                        </div>
+                    `;
+                    userList.innerHTML += userItem;
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('搜索失败，请稍后重试');
+            });
+        }
+
+        function addNewUser() {
+            // 显示模态框
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            // 隐藏模态框
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        async function submitForm() {
+            // 获取表单数据
+            var formData = {
+                name: document.getElementById('name').value,
+                identity_card: document.getElementById('identity_card').value,
+                admission_no: document.getElementById('admission_no').value,
+                gender: document.getElementById('gender').value,
+                age: document.getElementById('age').value,
+                fertility_history: document.getElementById('fertility_history').value,
+                education_level: document.getElementById('education_level').value,
+                occupation: document.getElementById('occupation').value,
+                diagnosis: document.getElementById('diagnosis').value,
+                comorbidity: document.getElementById('comorbidity').value,
+                therapeutic_modality: document.getElementById('therapeutic_modality').value,
+                methods_of_medical_cost_coverage: document.getElementById('methods_of_medical_cost_coverage').value,
+                marital_status: document.getElementById('marital_status').value,
+                phone: document.getElementById('phone').value,
+                emergency_contact: document.getElementById('emergency_contact').value,
+                emergency_contact_phone: document.getElementById('emergency_contact_phone').value,
+                address: document.getElementById('address').value,
+                agricultural_indicator: document.getElementById('agricultural_indicator').value === 'True'
+            };
+
+            console.log('Form Data:', formData);  // 打印表单数据
+
+            try {
+                // 发送数据到服务器
+                const response = await fetch('/api/test/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                console.log('Response Status:', response.status);  // 打印响应状态码
+
+                if (response.status === 200 || response.status === 201) {
+                    // 显示成功提示
+                    alert('新增用户成功');
+                    // 关闭模态框
+                    closeModal();
+                } else {
+                     // 获取错误信息
+                        const errorData = await response.json();
+                        console.error('Server Error:', errorData);
+                        // 显示失败提示
+                        alert('新增用户失败: ' + errorData.message);
+                    }
+                } catch (error) {
+                    console.error('Fetch Error:', error);
+                    // 显示失败提示
+                    alert('新增用户失败: 网络请求错误');
+                }
+            }
+        // 点击模态框外部区域关闭模态框
+        window.onclick = function(event) {
+            var modal = document.getElementById('modal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
