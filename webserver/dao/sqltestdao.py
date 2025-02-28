@@ -1,6 +1,6 @@
-from webserver.tools.mysqlconntool import mysqlconn
+from tools.mysqlconntool import mysqlconn
 def user_login(username, password):
-    sql = 'SELECT * FROM usertest WHERE username = %s AND password = %s'
+    sql = 'SELECT * FROM gptapp_user WHERE username = %s AND password = %s'
     val = (username, password)
     result = mysqlconn.sql_select(sql, val)
     if len(result) == 0:
@@ -8,11 +8,11 @@ def user_login(username, password):
     else:
         return result
 def user_register(username, password):
-    sql = "INSERT INTO usertest (username, password) VALUES (%s, %s)"
+    sql = "INSERT INTO gptapp_user (username, password) VALUES (%s, %s)"
     val = (username, password)
     return mysqlconn.sql_update(sql, val)
 def user_isexist(username):
-    sql = "SELECT * FROM usertest WHERE username = %s"
+    sql = "SELECT * FROM gptapp_user WHERE username = %s"
     val = (username,)
     result = mysqlconn.sql_select(sql, val)
     if len(result) == 0:

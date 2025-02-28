@@ -1,6 +1,6 @@
 from dashscope import Generation
 from dashscope.api_entities.dashscope_response import Role
-import webserver.tools.milvus.test as zhishi
+# import webserver.tools.milvus.test as zhishi
 from flask import request, Blueprint, Response, json
 appllm_api = Blueprint('appllm_api', __name__)
 
@@ -189,16 +189,16 @@ def requestIIMedGPT2():
     return Response(chat(), content_type='text/event-stream', headers=sse_headers)
 
 
-@appllm_api.route('/llm/zhishi')
-def requestzhishi():
-    question = request.args.get('query')
-    a=zhishi.query(question, 7879)
-    return a
-@appllm_api.route('/llm/zhishi2')
-def requestzhishi2():
-    question = request.args.get('query')
-    a=zhishi.query(question, 7880)
-    return a
+# @appllm_api.route('/llm/zhishi')
+# def requestzhishi():
+#     question = request.args.get('query')
+#     a=zhishi.query(question, 7879)
+#     return a
+# @appllm_api.route('/llm/zhishi2')
+# def requestzhishi2():
+#     question = request.args.get('query')
+#     a=zhishi.query(question, 7880)
+#     return a
 @appllm_api.route('/llm/clear')
 def clear():
 

@@ -1,12 +1,12 @@
 import asyncio
 import re
-from webserver.tools.milvus.milvus_handler import MilvusManager
-from webserver.tools.milvus.file_processor import init_model, extract_text_from_pdf, split_text, \
+from tools.milvus.milvus_handler import MilvusManager
+from tools.milvus.file_processor import init_model, extract_text_from_pdf, split_text, \
     generate_embeddings, extract_text_from_doc, \
     extract_text_from_txt
 import os
 from datetime import datetime
-from webserver.tools.milvus.config import Config
+from tools.milvus.config import Config
 
 # 初始化 Milvus 和模型
 milvus_manager = MilvusManager()

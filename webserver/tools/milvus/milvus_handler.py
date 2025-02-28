@@ -1,5 +1,5 @@
 from pymilvus import connections, FieldSchema, CollectionSchema, DataType, Collection, MilvusClient
-from webserver.tools.milvus.config import Config
+from tools.milvus.config import Config
 
 
 class MilvusManager:

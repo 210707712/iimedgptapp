@@ -1,6 +1,6 @@
 #数据库信息
-mysqlurl="43.142.55.75"
+mysqlurl="118.25.137.23"
 mysqlport="3306"
-mysqlname="iimxinli"
-mysqlaccount="iimxinli"
-mysqlpassword="iimxinli"
+mysqlname="gptapp"
+mysqlaccount="gptapp"
+mysqlpassword="gptapp"

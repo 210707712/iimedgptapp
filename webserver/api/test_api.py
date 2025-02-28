@@ -1,5 +1,5 @@
 from flask import request, Blueprint
-from webserver.server import sqltestserver
+from server import sqltestserver
 test_api = Blueprint('test_api', __name__)
 @test_api.route('/test')
 def test():

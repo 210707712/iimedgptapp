@@ -1,6 +1,6 @@
 import fitz  # PyMuPDF
 from sentence_transformers import SentenceTransformer
-from webserver.tools.milvus.config import Config
+from tools.milvus.config import Config
 from docx import Document
 
 
