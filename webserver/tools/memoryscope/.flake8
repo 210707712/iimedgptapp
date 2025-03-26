@@ -1,6 +1,0 @@
-[flake8]
-exclude = tests/*,examples/*,memoryscope/core/storage/llama_index_sync_elasticsearch.py
-max-line-length = 120
-inline-quotes = "
-avoid-escape = no
-ignore =
